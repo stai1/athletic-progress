@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  authServer: "https://stai-strava-oauth.herokuapp.com/"
 };
