@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   public authenticated = false;
+  public needAuthentication = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -23,15 +24,13 @@ export class AppComponent implements OnInit {
             this.tokenService.token(this.route.snapshot.queryParams.code).subscribe(
               () => this.authenticated = true,
               (error: HttpErrorResponse) => {
-                if(error.status === 400)
-                  this.goToAuthorizationPage();
-                else
-                  alert("Unable to authorize");
+                this.needAuthentication = true;
+                alert("Unable to authorize");
               }
             );
           }
           else
-            this.goToAuthorizationPage();
+            this.needAuthentication = true;
         }
 
       }
@@ -40,8 +39,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToAuthorizationPage(): void {
-    window.location.href = makeUrl(
+  public get authUrl() {
+    return makeUrl(
       'https://www.strava.com/oauth/authorize',
       {
         client_id: 36433,
