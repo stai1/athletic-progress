@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { makeUrl } from 'src/app/utils';
+import { makeUrl, pathjoin } from '../../utils';
 import { AuthService } from '../auth.service';
-import { TokenService } from 'src/app/token.service';
 
 @Component({
   selector: 'app-auth-page',
@@ -24,7 +23,7 @@ export class AuthPageComponent implements OnInit {
       {
         client_id: 36433,
         response_type: 'code',
-        redirect_uri: `${location.protocol}//${location.host}${this.authService.redirectUrl}`,
+        redirect_uri: pathjoin(document.baseURI, this.authService.redirectUrl),
         approval_prompt: 'force',
         scope:"activity:read,activity:read_all"
       }

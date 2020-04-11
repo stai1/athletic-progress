@@ -18,7 +18,7 @@ export class AuthCheck implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
     ): boolean {
-    const url: string = state.url;
+    const url: string = state.url.slice(0, state.url.indexOf('?'));
 
     this.authService.authorize().pipe(
       tap(
