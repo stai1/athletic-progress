@@ -36,9 +36,7 @@ export class MapComponent implements AfterViewInit {
 
   constructor(
     private activityService: ActivityService,
-  ) {
-
-  }
+  ) { }
 
 
   ngAfterViewInit() {

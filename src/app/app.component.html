@@ -1,9 +1,1 @@
-<ng-container *ngIf="authenticated">
-  <app-map></app-map>
-</ng-container>
-
-<div class="button-container" *ngIf="!authenticated && needAuthentication">
-  <a [href]="authUrl">
-    <img src="../assets/btn_strava_connectwith_orange.png">
-  </a>
-</div>
+<router-outlet></router-outlet>
