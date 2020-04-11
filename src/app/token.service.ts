@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { tap } from 'rxjs/operators';
+
+const POKE_INTERVAL_MINUTES = 25;
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,9 @@ export class TokenService {
   constructor(
     private http: HttpClient,
   ) {
+    timer(0, POKE_INTERVAL_MINUTES * 60000).subscribe(
+      () => this.poke()
+    );
   }
 
   public get accessToken() {
@@ -23,6 +28,13 @@ export class TokenService {
 
   public get refreshToken() {
     return this._refreshToken;
+  }
+
+  /**
+   * Poke the server to keep it running for Heroku
+   */
+  private poke() {
+    this.http.get(this.serverPath).subscribe();
   }
 
   token(code: string): Observable<any> {

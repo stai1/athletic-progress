@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { makeUrl } from 'src/app/utils';
 import { AuthService } from '../auth.service';
+import { TokenService } from 'src/app/token.service';
 
 @Component({
   selector: 'app-auth-page',
@@ -10,7 +11,7 @@ import { AuthService } from '../auth.service';
 export class AuthPageComponent implements OnInit {
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
   ) {
   }
 
