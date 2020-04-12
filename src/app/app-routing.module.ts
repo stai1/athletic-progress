@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './layouts/main/main.component';
 import { AuthCheck } from './auth/auth-check';
-import { MapComponent } from './map/map.component';
 import { ContentComponent } from './layouts/content/content.component';
 
 
@@ -19,7 +18,7 @@ const routes: Routes = [
     children: [
       {
         path: 'everywhere-ive-been',
-        component: MapComponent
+        loadChildren: () => import('./everywhere-ive-been/everywhere-ive-been.module').then(m => m.EverywhereIveBeenModule)
       }
     ]
   },

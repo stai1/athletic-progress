@@ -11,8 +11,8 @@ import {Style, Stroke, Circle, Fill} from 'ol/style';
 import Polyline from 'ol/format/Polyline';
 import ZoomToExtent from 'ol/control/ZoomToExtent';
 
-import { ActivityService } from '../activity.service';
-import { Activity } from '../activity';
+import { ActivityService } from '../../activity.service';
+import { Activity } from '../../activity';
 
 @Component({
   selector: 'app-map',
