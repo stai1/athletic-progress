@@ -25,7 +25,8 @@ export class AuthCheck implements CanActivate {
 
     this.authService.authorize().subscribe();
 
-    return !this.authService.needAuthorization
+    //return !this.authService.needAuthorization
+    return true;
 
     // return this.router.events.pipe(
     //   filter(
