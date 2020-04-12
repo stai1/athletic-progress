@@ -8,17 +8,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { MainComponent } from './layouts/main/main.component';
 import { AuthService } from './auth/auth.service';
 import { AuthCheck } from './auth/auth-check';
+import { AuthModule } from './auth/auth.module';
+import { ContentComponent } from './layouts/content/content.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    MainComponent
+    MainComponent,
+    ContentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    AuthModule,
   ],
   providers: [
     AuthService,

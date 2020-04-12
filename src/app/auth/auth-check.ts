@@ -18,18 +18,12 @@ export class AuthCheck implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
     ): boolean {
-    const url: string = state.url.slice(0, state.url.indexOf('?'));
+    let url: string = state.url;
+    if(url.includes('?'))
+      url = url.slice(0, state.url.indexOf('?'));
+    this.authService.redirectUrl = url;
 
-    this.authService.authorize().pipe(
-      tap(
-        authorized => {
-          if(!authorized) {
-            this.authService.redirectUrl = url;
-            this.router.navigate(['/auth']);
-          }
-        }
-      )
-    ).subscribe();
+    this.authService.authorize().subscribe();
 
     return !this.authService.needAuthorization
 
