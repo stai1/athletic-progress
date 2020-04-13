@@ -13,6 +13,7 @@ import ZoomToExtent from 'ol/control/ZoomToExtent';
 
 import { ActivityService } from '../../activity.service';
 import { Activity } from '../../activity';
+import { pathjoin } from 'src/app/utils';
 
 @Component({
   selector: 'app-map',
@@ -29,10 +30,20 @@ export class MapComponent implements AfterViewInit {
     })
   });
 
+  highlight = new Style({
+    stroke: new Stroke({
+      color: '#00ff00',
+      width: 4
+    })
+  });
+
+  selected: Feature = null;
+
   autoMove: boolean = true;
   userInteracted: boolean = false; // set to and stays true on first user interaction with map
   
-  pathLayerSource = new VectorSource({ wrapX: true});
+  pathLayerSource = new VectorSource({ wrapX: true });
+  selectedLayerSource = new VectorSource({ wrapX: true });
 
   constructor(
     private activityService: ActivityService,
@@ -54,11 +65,38 @@ export class MapComponent implements AfterViewInit {
       layers: [
         new TileLayer({source: mapSource}),
         new VectorLayer({ source: this.pathLayerSource}),
+        new VectorLayer({ source: this.selectedLayerSource}),
       ],
       view: new View({
         center: fromLonLat([0,0]),
         zoom: 0,
       }),
+    });
+
+    this.map.on('pointermove', (e) => {
+      if (this.selected !== null) {
+        this.selected.setStyle(this.lineStyle);
+        this.selectedLayerSource.removeFeature(this.selected);
+        this.pathLayerSource.addFeature(this.selected);
+        document.body.style.cursor = 'default';
+        this.selected = null;
+      }
+      
+      this.map.forEachFeatureAtPixel(e.pixel, (f) => {
+        this.selected = <Feature> f;
+        console.log(f);
+        this.pathLayerSource.removeFeature(this.selected);
+        this.selectedLayerSource.addFeature(this.selected);
+        this.selected.setStyle(this.highlight);
+        document.body.style.cursor = 'pointer';
+        return true;
+      });
+    });
+
+    this.map.on('click', (e) => {
+      if(this.selected) {
+        window.open(pathjoin('https://www.strava.com/activities/', this.selected.get('id')), '_blank');
+      }
     });
 
     let userInputFunction = () => {
@@ -98,18 +136,18 @@ export class MapComponent implements AfterViewInit {
 
   addActivitiesToMap(activities: Activity[]): void {
     for(let activity of activities) {
-      let points = [[-121.96255081, 37.54584115], [-121.96252377, 37.54584736], [-121.9624995, 37.54585315]].map(item => fromLonLat(item));
-      activity.polyline;
-
       let route = (new Polyline().readGeometry(
         activity.polyline,
         {
           dataProjection: 'EPSG:4326',
           featureProjection: 'EPSG:3857'
         }
-      )).simplify(0.06);
+      )).simplify(10); // decimate curve
       let lineFeature = new Feature({ geometry: route});
       lineFeature.setStyle(this.lineStyle);
+      lineFeature.set('id', activity.id);
+      lineFeature.set('name', activity.name);
+      lineFeature.set('date', activity.start_date);
       this.pathLayerSource.addFeature(lineFeature);
 
     }

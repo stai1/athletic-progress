@@ -1,1 +1,4 @@
-<div id="map" class="map"></div>
+<div class="map-container">
+  <div class="above-map" *ngIf="selected">{{selected.get('name')}} ({{selected?.get('date')}})</div>
+  <div id="map" class="map"></div>
+</div>
