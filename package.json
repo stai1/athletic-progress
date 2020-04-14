@@ -1,10 +1,10 @@
 {
-  "name": "everywhere-ive-been",
+  "name": "athletic-progress",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod=true --base-href /everywhere-ive-been/ --deploy-url /everywhere-ive-been/",
+    "build": "ng build --prod=true --base-href /athletic-progress/ --deploy-url /athletic-progress/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
