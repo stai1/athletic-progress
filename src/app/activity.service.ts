@@ -3,7 +3,7 @@ import { Activity } from './activity';
 import { StravaAPIService } from './strava-api.service';
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
-const PER_PAGE = 100;
+const PER_PAGE = 200;
 
 @Injectable({
   providedIn: 'root'

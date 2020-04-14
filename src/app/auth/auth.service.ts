@@ -28,8 +28,10 @@ export class AuthService {
         (event: RouterEvent) => {
           if(this.authorized)
             return of(true);
-          if(this.route.snapshot.queryParams.code)
+          if(this.route.snapshot.queryParams.code) {
+            this.router.navigate([this.router.url.split('?')[0]]);
             return this.tokenService.token(this.route.snapshot.queryParams.code);
+          }
           return of(false);
   
         }
