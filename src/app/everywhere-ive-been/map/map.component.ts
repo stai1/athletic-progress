@@ -13,7 +13,7 @@ import ZoomToExtent from 'ol/control/ZoomToExtent';
 
 import { ActivityService } from '../../activity.service';
 import { Activity } from '../../activity';
-import { pathjoin } from 'src/app/utils';
+import { pathjoin } from '../../utils';
 
 @Component({
   selector: 'app-map',
