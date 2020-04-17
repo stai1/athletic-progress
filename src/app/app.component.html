@@ -1,25 +1,29 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a routerLink="." class="navbar-brand" href="#">
-    Athletic Progress
-  </a>
+<div class="page">
+  <nav class="navbar navbar-expand navbar-dark bg-dark top">
+    <a routerLink="." class="navbar-brand" href="#">
+      Athletic Progress
+    </a>
 
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item dropdown" (click)="toggleDropdown()" (clickOutside)="setDropdown(false)">
-      <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{ dropdownTitle }}
-      </div>
-      <div [ngClass]="{show: dropdownActive}" (click)="$event.stopPropagation()" class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <ng-container *ngFor="let item of menuItems; let i = index">
-          <div *ngIf="i!==0"class="dropdown-divider"></div>
-          <a [routerLink]="item.path" (click)="toggleDropdown(!item.disabled)" [ngClass]="{disabled: item.disabled}" class="dropdown-item">
-            {{ item.title}}
-          </a>
-        </ng-container>
-      </div>
-    </li>
-  </ul>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown" (click)="toggleDropdown()" (clickOutside)="setDropdown(false)">
+        <div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ dropdownTitle }}
+        </div>
+        <div [ngClass]="{show: dropdownActive}" (click)="$event.stopPropagation()" class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ng-container *ngFor="let item of menuItems; let i = index">
+            <div *ngIf="i!==0"class="dropdown-divider"></div>
+            <a [routerLink]="item.path" (click)="toggleDropdown(!item.disabled)" [ngClass]="{disabled: item.disabled}" class="dropdown-item">
+              {{ item.title}}
+            </a>
+          </ng-container>
+        </div>
+      </li>
+    </ul>
 
-</nav>
-<app-auth-page *ngIf="authService.needAuthorization"></app-auth-page>
+  </nav>
 
-<router-outlet></router-outlet>
+  <div class="bottom">
+    <app-auth-page *ngIf="authService.needAuthorization"></app-auth-page>
+    <router-outlet></router-outlet>
+  </div>
+</div>
